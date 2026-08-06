@@ -52,6 +52,10 @@ Dans le fichier des préférences, dans le dossier res.
 
 https://github.com/jlorente/cordova-plugin-volume-control : marche pour iOS et Android.
 
+# Refaire l'application
+
+Remettre les fichiers du repo. dans celui de l'app. par défaut.  Le .gitignore rensigne sur les dossiers abscent du repo regénérés par l'app. par défaut.
+
 # Faire une image AppImage
 
 Dans le dossier `/home/fredele/MyPlayer/cordova_app/MyPlayer/platforms/electron/build/` , décompressez l' archive et copier les fichiers dans le dossier appimage à l'intérieur. Il s' agit des fichiers AppRun, .desktop et l' image ...
