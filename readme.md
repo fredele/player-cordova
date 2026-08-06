@@ -1,0 +1,2 @@
+Cordova interface for player
+

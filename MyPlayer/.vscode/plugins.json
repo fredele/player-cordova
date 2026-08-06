@@ -1,0 +1,1 @@
+{"plugins":["cordova-plugin-file","cordova-plugin-media","cordova-plugin-volume-control","cordova-plugin-device","cordova-plugin-dialogs","cordova-plugin-statusbar","cordova-plugin-cache-delete","cordova-plugin-splashscreen"]}

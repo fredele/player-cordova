@@ -1,0 +1,32 @@
+{
+  "name": "cordova-plugin-cache-delete",
+  "version": "1.0.7",
+  "author": {
+    "name": "Takuya Nakayasu",
+    "email": "l08084.1989@gmail.com",
+    "url": "https://github.com/takuya-nakayasu"
+  },
+  "homepage": "https://github.com/takuya-nakayasu/cordova-plugin-cache-delete",
+  "cordova": {
+    "id": "cordova-plugin-cache-delete",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takuya-nakayasu/cordova-plugin-cache-delete.git"
+  },
+  "description": "This is a WebView cache plugin for Cordova supporting Android. It allows to delete the cordova webview cache.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "cordova",
+    "webview",
+    "cache",
+    "delete",
+    "Code Cache",
+    "android",
+    "HTTP Cache",
+    "cordova-android"
+  ]
+}

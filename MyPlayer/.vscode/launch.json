@@ -1,0 +1,29 @@
+{
+   
+    "version": "0.2.0",
+    "configurations": [
+
+     
+     {
+        "name": "Android Debug",
+        "type": "cordova",
+        "request": "attach",
+        "platform": "android",
+        "target": "device",
+        "port": 9222,
+        "sourceMaps": true,
+        "cwd": "${workspaceFolder}",
+        "preLaunchTask": "Cordova Run Android Debug"
+      },
+      {
+        "name": "Electron Run",
+        "type": "chrome",
+        "request": "attach",
+        "port": 9223,
+        "webRoot": "${workspaceFolder}/www",
+        "sourceMapPathOverrides": {"file:///*": "${workspaceFolder}/www/*" },
+        "preLaunchTask": "Cordova Run Electron"
+      }
+
+    ]
+}

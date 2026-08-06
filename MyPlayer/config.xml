@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.player" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Player</name>
+    <description>Player</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">fredele</author>
+    <content src="browse_android.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="http://*/*" />
+		<allow-navigation href="http://*/*" />
+		<allow-navigation href="https://*/*" />
+    <access origin="*" />
+    
+    <meta http-equiv="Content-Security-Policy"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' foo.com"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cordova.apache.org"/>
+    
+    <platform name="android">
+      <content src="browse.html" />
+	    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+	   
+        <application android:usesCleartextTraffic="true" />
+        <application android:networkSecurityConfig="@xml/network_security_config"  />
+        <application android:icon="@mipmap/ic_launcher"  />
+        <application android:roundIcon="@mipmap/ic_launcher"  />
+    
+    <access>
+    <access origin="*" />
+    </access>
+			 </edit-config>
+			 <resource-file src="res/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
+      <preference name="SplashMaintainAspectRatio" value="true"/>
+    	<preference name="AndroidWindowSplashScreenAnimatedIcon" value="/home/fredele/MyPlayer/cordova_app/MyPlayer/www/img/transparent.png"/>
+    	<preference name="AndroidWindowSplashScreenBackground" value="#000000"/>
+    	<preference name="AndroidWindowSplashScreenDuration" value="0"/>
+			<preference name="AutoHideSplashScreen" value="true"/>
+			<preference name="android:usesCleartextTraffic" value="true" />
+      <preference name="Orientation" value="landscape" />
+			<preference name="scheme" value="http" />
+      <preference name="CacheEnabled" value="false" />
+    </platform>
+    <platform name="electron">
+      <content src="browse.html" />
+    	<preference name="ElectronNodeIntegration" value="true" />
+      <preference name="ElectronBackgroundColor" value="#000000" />
+      <preference name="ElectronSettingsFilePath" value="res/electron/settings.json" />
+      <preference name="SplashScreen" value="img/transparent.png" />
+      <preference name="CacheEnabled" value="false" />
+    </platform>
+    
+</widget>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-cache-delete" version="1.0.0">
+
+  <name>Cordova Cache Delete</name>
+  <description>This is a WebView cache plugin for Cordova supporting Android. It allows to delete the cordova webview cache.</description>
+  <license>Apache 2.0</license>
+  <keywords>cordova, webview, cache, delete, Code Cache, android, HTTP Cache, cordova-android</keywords>
+  <repo>https://github.com/takuya-nakayasu/cordova-plugin-cache-delete.git</repo>
+
+  <js-module src="www/CacheDelete.js" name="CacheDelete">
+    <clobbers target="CacheDelete" />
+  </js-module>
+
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="CacheDelete">
+        <param name="android-package" value="jp.l08084.plugin.CacheDelete"/>
+      </feature>
+    </config-file>
+    <source-file src="src/android/CacheDelete.java" target-dir="src/jp/l08084/plugin/" />
+  </platform>
+
+</plugin>
