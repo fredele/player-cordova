@@ -39,6 +39,7 @@
   <script src="js/spectrum.js"></script>
   <script src="js/wsreconnect.js"></script>
   <script src="js/long-press-event.js"></script>
+  <script src="js/long-press-event2.js"></script>
   <script src="js/yall.min.js"></script>
   <script src="js/loadlazyload.js"></script>
   <script src="cordova.js"></script>
@@ -108,7 +109,7 @@
     
     <canvas id="spectrum" width="300" height="100"></canvas>
     <canvas id="level" width="14" height="40"></canvas>
-    <img id="scanning_img" class="footer_height" src="img/import.png" onclick="move_panels()">
+    <img id="scanning_img" class="footer_height" src="img/import.png">
     <!-- end footer -->
   </div>
   <div id="query_container">
@@ -156,7 +157,7 @@
   </div>
   <div id="menu_container">
     <div id="menu_all">
-      <img id="library_btn" src="img/library.png" onclick="goto_library()">
+      <img id="library_btn" src="img/library.png" onclick="goto_music_library()">
       <img id="podcast_btn" src="img/podcast.png" onclick="goto_podcast()">
       <img id="radio_btn" src="img/radio.png" onclick="goto_radio()">
       <img id="param_btn" src="img/param.png" onclick="goto_database()">

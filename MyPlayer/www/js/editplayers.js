@@ -79,15 +79,32 @@ function renderUpnpPlayers(players) {
       </div>
 
       <div class="field-label gapless-label">Gapless</div>
-      <select class="gapless-select" aria-label="Gapless">
-        <option value="true" ${p.gapless === true || p.gapless === 'true' ? 'selected' : ''}>true</option>
-        <option value="false" ${p.gapless === false || p.gapless === 'without' || p.gapless === 'false' ? 'selected' : ''}>false</option>
-      </select>
+      <label class="checkbox-field">
+        <input class="gapless-checkbox" type="checkbox" ${p.gapless === true || p.gapless === 'true' ? 'checked' : ''}>
+      </label>
 
       <div class="field-label volume-label">Volume</div>
-      <select class="volume-select" aria-label="Contrôle du volume">
-        <option value="true" ${p.volume_control === true ? 'selected' : ''}>true</option>
-        <option value="false" ${p.volume_control === false ? 'selected' : ''}>false</option>
+      <label class="checkbox-field">
+        <input class="volume-checkbox" type="checkbox" ${p.volume_control === true || p.volume_control === 'true' ? 'checked' : ''}>
+      </label>
+
+      <div class="field-label transcode-label">Transcode</div>
+      <label class="checkbox-field">
+        <input class="transcode-checkbox" type="checkbox" ${p.transcode === true || p.transcode === 'true' ? 'checked' : ''}>
+      </label>
+
+      <div class="field-label codec-label">Codec</div>
+      <select class="codec-select" aria-label="Codec de transcodage">
+        <option value="mp3" ${p.codec === 'mp3' || p.codec === 'MP3' ? 'selected' : ''}>mp3</option>
+        <option value="ogg" ${p.codec === 'ogg' || p.codec === 'OGG' ? 'selected' : ''}>ogg</option>
+      </select>
+
+      <div class="field-label bitrate-label">Bitrate</div>
+      <select class="bitrate-select" aria-label="Bitrate de transcodage">
+        <option value="128" ${String(p.bitrate || '128') === '128' ? 'selected' : ''}>128</option>
+        <option value="192" ${String(p.bitrate || '128') === '192' ? 'selected' : ''}>192</option>
+        <option value="256" ${String(p.bitrate || '128') === '256' ? 'selected' : ''}>256</option>
+        <option value="320" ${String(p.bitrate || '128') === '320' ? 'selected' : ''}>320</option>
       </select>
 
       <button class="remove-btn" aria-label="Supprimer">-</button>
@@ -159,7 +176,12 @@ function renderUpnpPlayers(players) {
 function after_Get_Players(){
 
  const data = JSON.parse(this.response) ;
- current_player_id = data.player.id;
+ try {
+  current_player_id = data.player.id; 
+ } catch (error) {
+   
+ } 
+ 
  let upnpPlayers = (data.players || []).filter(p => p.type === 'upnp');
   renderUpnpPlayers(upnpPlayers);
   
@@ -180,16 +202,22 @@ function collectUpnpPlayers() {
     const id = index + 1; // numérotation incrémentale
     const address = item.dataset.address;
     const nameInput = item.querySelector('.name-input');
-    const gaplessSelect = item.querySelector('.gapless-select');
-    const volumeSelect = item.querySelector('.volume-select');
+    const gaplessCheckbox = item.querySelector('.gapless-checkbox');
+    const volumeCheckbox = item.querySelector('.volume-checkbox');
+    const transcodeCheckbox = item.querySelector('.transcode-checkbox');
+    const codecSelect = item.querySelector('.codec-select');
+    const bitrateSelect = item.querySelector('.bitrate-select');
 
     return {
       id: String(id),
       type: 'upnp',
       name: nameInput ? nameInput.value.trim() : '',
       address: String(address || ''),
-      volume_control: volumeSelect?.value === 'true',
-      gapless: gaplessSelect?.value === 'true'
+      volume_control: volumeCheckbox ? volumeCheckbox.checked : false,
+      gapless: gaplessCheckbox ? gaplessCheckbox.checked : false,
+      transcode: transcodeCheckbox ? transcodeCheckbox.checked : false,
+      codec: codecSelect ? codecSelect.value : 'mp3',
+      bitrate: bitrateSelect ? Number(bitrateSelect.value) : 128,
     };
   });
 

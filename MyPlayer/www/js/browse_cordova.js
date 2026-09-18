@@ -575,18 +575,23 @@ function on_ws_msg(data) {
       }, 3000);
     }
 
-    if (msg == "Update Library") {
+    if (msg == "library_scan_started")
+    {
       document.getElementById('scanning_img').style.opacity = 1;
       window.scanning = true;
       sessionStorage.setItem("Library Updating", "true");
+      return;
     }
 
-    if (msg == "Library Updated") {
+    if (msg == "library_scan_finished" || msg == "library_scan_stopped" || msg == "library_scan_error")
+    {
       document.getElementById('scanning_img').style.opacity = 0;
       sessionStorage.setItem("Library Updating", "false");
       window.scanning = false;
       Server_Get_UpdatedImages(after_Get_UpdatedImages)
+      return;
     }
+   
 
     if (msg == "Cover changed") {
       Server_Get_UpdatedImages(after_Get_UpdatedImages)
@@ -719,7 +724,7 @@ function each5second() {
     document.getElementById('time_elapsed').innerHTML = "";
   
   }
- Server_Scanning(after_Scanning, null);
+  Server_LibraryScanStatus(after_ScanStatus, null);
 }
 
 function onload_browse() {
@@ -963,6 +968,6 @@ function after_onload_browse() {
   document.getElementById('playlist_item_delete_img').addEventListener('dragenter', playlist_item_dragenter);
   Server_Get_Players_Detected(after_Get_Players_Detected);
   //Server_Get_Players_Detect(after_Get_Players_Detect);
-   Server_Scanning(after_Scanning, null);
+  Server_LibraryScanStatus(after_ScanStatus, null);
 
 }

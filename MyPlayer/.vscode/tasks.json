@@ -1,47 +1,101 @@
 {
     "version": "2.0.0",
     "tasks": [
-      {
-        "label": "Cordova Run Electron",
-        "type": "shell",
-        "command": "cordova",
-        "args": [
-          "run",
-          "electron",
-          "--nobuild",
-          "--",
-          "--remote-debugging-port=9222"
-        ],
-        "problemMatcher": [],
-        "group": {
-          "kind": "build",
-          "isDefault": true
-        },
-        "isBackground": true,
-        
-      },
-      
-            {
-        "label": "Cordova Run Android Debug",
-        "type": "shell",
-        "command": "cordova",
-        "args": [
-          "run",
-          "android","--device","--debug"
-        ],
-        "problemMatcher": [],
-        "group": {
-          "kind": "build",
-          "isDefault": false
-        },
-        "isBackground": true,
-        
-        "options": {
-          "env": {
-            "ANDROID_HOME": "/home/fredele/.Applications/android-SDK",
-            "PATH": "/home/fredele/.nvm/versions/node/v17.9.1/bin:/home/fredele/.cargo/bin:/home/fredele/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/fredele/.Applications/android-cmdline-tools/bin/:/opt/gradle/gradle-8.12/bin"
-          }
+{
+      "label": "Cordova Run Electron ",
+      "type": "shell",
+      "command": "./run_electron.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
         }
-      }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    },
+
+    {
+      "label": "Cordova Run Android",
+      "type": "shell",
+      "command": "./run_android.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    },
+     {
+      "label": "Cordova Build debug Appimage",
+      "type": "shell",
+      "command": "./build_debug_appimage.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    },
+     {
+      "label": "Cordova Build release Appimage",
+      "type": "shell",
+      "command": "./build_release_appimage.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    },
+    {
+      "label": "Cordova Build debug APK",
+      "type": "shell",
+      "command": "./build_debug_apk.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    }, {
+      "label": "Cordova Build release APK",
+      "type": "shell",
+      "command": "./build_release_apk.sh",
+      "options": {
+        "shell": {
+          "args": ["-i", "-c"]
+        }
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true
+    }
     ]
   }

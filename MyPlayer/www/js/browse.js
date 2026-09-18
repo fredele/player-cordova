@@ -39,6 +39,7 @@ var lastdisplay = "";
 var playlist = [];
 var current_playing_position = 0;
 let player;
+var current_hub = "";
 var reimport_query = "";
 var req_thumb_cout = 1500;
 var level = 0;
@@ -68,20 +69,47 @@ try {
 function after_Player_CurrentPosition() { }
 try {
 
-  document.getElementById('volume_btn').addEventListener('long-press', function (e) {
-    e.preventDefault();
-    show_outputs();
-  });
+  //document.getElementById('volume_btn').addEventListener('long-press', function (e) {
+  //  e.preventDefault();
+  //  show_outputs();
+  //});
 
-  document.getElementById('scanning_img').addEventListener('long-press', function (e) {
-    e.preventDefault();
-    if (document.getElementById('scanning_img').style.opacity == 0) {
-      Server_LibraryScanFolders();
-    }
+  const volumeBtn = document.getElementById('volume_btn');
 
-  });
+  addLongPressListener(
+    volumeBtn,
+    () => volume_show(),    
+    () => show_outputs(),   
+    700                    
+  );
+
+
+
+  const scanBtn = document.getElementById('scanning_img');
+
+  addLongPressListener(
+    scanBtn,
+    () => move_panels(),    
+    () => Server_LibraryScanMusicFolders(),   
+    700                 
+  );
+
+
 
 } catch (e) { }
+
+
+
+function ScanMusicFolders() {
+
+  if (document.getElementById('scanning_img').style.opacity == 0) {
+      // n'exécute le scan que si on est dans le hub "music library"
+      if (current_hub === 'music_library') {
+        Server_LibraryScanMusicFolders();
+      }
+    }
+
+}
 
 function move_panels() {
   if (document.getElementById("menu_all").style.width == "80px") {
@@ -738,8 +766,9 @@ function goto_database() {
   document.getElementById("param_btn").style.backgroundColor = "#c9c9c94f";
 }
 
-function goto_library() {
+function goto_music_library() {
   level = 0;
+  current_hub = "music_library";
   browsemenu = 0;
   header_line = []
   header_line.push(translate("library"));
@@ -754,6 +783,7 @@ function goto_library() {
 
 function goto_podcast() {
   level = 0;
+  current_hub = "podcast";
   header_line = []
   header_line.push(translate("podcasts"));
   document.getElementById("header_container").innerHTML = header_line.join(' > ');
@@ -766,6 +796,7 @@ function goto_podcast() {
 
 function goto_radio() {
   level = 0;
+  current_hub = "radio";
   header_line = []
   header_line.push(translate("radios"));
   document.getElementById("header_container").innerHTML = header_line.join(' > ');
@@ -853,11 +884,18 @@ function handleFiles(files) {
 function uploadFile(file) {
   let url = window.addr + "/v1/UpdateCover";
   let formData = new FormData()
+  authorizationBasic = ``;
+  if (token != null ) {
+  authorizationBasic = `Bearer ` + token;
+  }
 
   formData.append('file', file)
   fetch(url, {
     method: 'POST',
-    body: formData
+    body: formData,
+     headers: {
+      'Authorization': authorizationBasic
+    }
   })
     .then(() => {
       Server_Get_UpdatedImages(after_Upload_file)
@@ -909,6 +947,11 @@ function handleFiles_query(files) {
 }
 
 function uploadFile_query(file) {
+
+ authorizationBasic = ``;
+  if (token != null ) {
+  authorizationBasic = `Bearer ` + token;
+  }
   let url = window.addr + "/v1/UpdateCover?query=" + lastqueryview;
 
   let formData = new FormData()
@@ -916,7 +959,10 @@ function uploadFile_query(file) {
   formData.append('file', file)
   fetch(url, {
     method: 'POST',
-    body: formData
+    body: formData,
+     headers: {
+      'Authorization': authorizationBasic
+    }
   })
     .then(() => {
       Server_Get_UpdatedImages(after_Upload_file, null);
@@ -989,7 +1035,7 @@ function after_Format_Display() {
 // Corrects
 function correctdisplay(display, name) {
   Array.from(document.getElementsByClassName(name)).forEach(el => {
-    el.innerHTML = display;
+    el.innerHTML = nettoyerSeparateurs(display);
   });
 
 }
@@ -1028,11 +1074,22 @@ function after_current_track_info() {
   })
 }
 
+function nettoyerSeparateurs(str) {
+  return str
+    .replace(/[\s/\\-]{2,}/g, ' / ')
+    .replace(/\s+\/\s*/g, ' / ')
+    .replace(/\/\s+/g, '/ ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+
+
 function after_track_info_1() {
   var responseObject = JSON.parse(this.response);
   display = responseObject["display"]
   Array.from(document.getElementsByClassName('current_track_infos')).forEach(el => {
-    el.innerHTML = display;
+    el.innerHTML = nettoyerSeparateurs(display);
   })
 }
 

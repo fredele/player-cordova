@@ -471,17 +471,20 @@ function on_ws_msg(data) {
       }, 3000);
     }
 
-    if (msg == "Update Library") {
+   if (msg == "library_scan_started")
+   {
       document.getElementById('scanning_img').style.opacity = 1;
       window.scanning = true;
       sessionStorage.setItem("Library Updating", "true");
+     return;
     }
 
-    if (msg == "Library Updated") {
+   if (msg == "library_scan_finished" || msg == "library_scan_stopped" || msg == "library_scan_error")
+   {
       document.getElementById('scanning_img').style.opacity = 0;
       sessionStorage.setItem("Library Updating", "false");
       window.scanning = false;
-      Server_Get_UpdatedImages(after_Get_UpdatedImages)
+      return;
     }
 
     if (msg == "Cover changed") {
@@ -583,7 +586,7 @@ function each5second() {
   }
   else {
   }
-  Server_Scanning(after_Scanning, null);
+  Server_LibraryScanStatus(after_ScanStatus, null);
 }
 
 
@@ -649,10 +652,15 @@ function onload_browse() {
   }
 
 
-  document.getElementById('volume_btn').addEventListener('long-press', function (e) {
-    e.preventDefault();
-    show_outputs();
-  });
+
+  const volumeBtn = document.getElementById('volume_btn');
+
+  addLongPressListener(
+    volumeBtn,
+    () => volume_show(),    // Clic court
+    () => show_outputs(),   // Appui long
+    1000                     // Optionnel : durée en ms (700 par défaut)
+  );
 
 
   levelcanvas = document.getElementById('level');
@@ -806,7 +814,7 @@ function after_onload_browse() {
   
   Server_Get_Players_Detected(after_Get_Players_Detected);
   //Server_Get_Players_Detect(after_Get_Players_Detect);
-  Server_Scanning(after_Scanning, null);
+  Server_LibraryScanStatus(after_ScanStatus, null);
 
 }
 

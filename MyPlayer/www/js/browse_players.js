@@ -373,18 +373,24 @@ function on_ws_msg(data) {
       }, 3000);
     }
 
-    if (msg == "Update Library") {
+
+    if (msg == "library_scan_started")
+    {
       document.getElementById('scanning_img').style.opacity = 1;
       window.scanning = true;
       sessionStorage.setItem("Library Updating", "true");
+      return;
     }
 
-    if (msg == "Library Updated") {
+    if (msg == "library_scan_finished" || msg == "library_scan_stopped" || msg == "library_scan_error")
+    {
       document.getElementById('scanning_img').style.opacity = 0;
       sessionStorage.setItem("Library Updating", "false");
       window.scanning = false;
       Server_Get_UpdatedImages(after_Get_UpdatedImages)
+      return;
     }
+
 
     if (msg == "Cover changed") {
       Server_Get_UpdatedImages(after_Get_UpdatedImages)
@@ -681,7 +687,7 @@ function after_onload_browse() {
     Server_Player_CurrentTrack(current_track_info, "json", after_CurrentTrack, null);
     Server_Player_CurrentTrack(track_info_1, "json", after_CurrentTrack_Playlist, null);
     Server_Player_CurrentTrack(format_info, " ", after_Format_Display, null);
-    Server_Scanning(after_Scanning, null);
+    Server_LibraryScanStatus(after_ScanStatus, null);
     Server_Get_Ouputs(after_Get_Output, null);
     Server_Get_Queue(after_Get_Queue, null);
     Server_Player_CurrentPosition(after_Player_CurrentPosition, null);
